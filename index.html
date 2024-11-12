@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Rock, Paper, Scissors Game</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@400&display=swap');
+        
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lemonada', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3e5ab;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .game-container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .choices button {
+            padding: 8px 18px;
+            margin: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #f2a154;
+            color: #fff;
+            transition: background 0.3s ease;
+        }
+
+        .choices button:hover {
+            background-color: #ec8d23;
+        }
+
+        .result, .score {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Popup Greeting */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+            z-index: 10;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .popup-content h2 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .popup-content button {
+            background-color: #f2a154;
+            color: white;
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        .footer a {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Popup Greeting -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>Welcome to the Game!</h2>
+            <p>Get ready to play Rock, Paper, Scissors.</p>
+            <button onclick="closePopup()">Let's Start!</button>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors!</h1>
+        <div class="choices">
+            <button onclick="playGame('rock')">Rock</button>
+            <button onclick="playGame('paper')">Paper</button>
+            <button onclick="playGame('scissors')">Scissors</button>
+        </div>
+        <div class="result">
+            <p id="result-text">Choose an option to play!</p>
+        </div>
+        <div class="score">
+            <p id="score-text">Player: 0 | Computer: 0</p>
+        </div>
+        <div class="footer">
+            <p>Created by <a href="#">Salman Groovin</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Popup Control
+        function showPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Show popup on page load
+        window.onload = showPopup;
+
+        // Game Variables
+        let playerScore = 0;
+        let computerScore = 0;
+
+        // Game Logic
+        function playGame(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            let result = '';
+            if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = 'You win! 🎉';
+                playerScore++;
+            } else {
+                result = 'Computer wins! 😞';
+                computerScore++;
+            }
+
+            document.getElementById('result-text').textContent = `You chose ${playerChoice}, computer chose ${computerChoice}. ${result}`;
+            document.getElementById('score-text').textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+        }
+    </script>
+</body>
+</html>
